@@ -1,0 +1,109 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap'); */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Source Sans Pro", sans-rerif;
+	font-size: 16px;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+
+input, textarea {
+	margin: 10px 0;
+	border: none;
+	outline: none;
+	transition: all ease .2s;
+	padding: 10px 15px;
+	border: 1px solid #CAD3C8;
+	border-radius: 10px;
+	resize: none;
+}
+
+input:focus {
+	border: 1px solid #182C61;
+}
+
+a {
+	text-decoration: none;
+}
+
+.btn {
+	margin: 10px 0;
+	display: inline-block;
+	min-width: 150px;
+	padding: 10px 20px;
+	text-align: center;
+	border: none;
+	border-radius: 10px;
+	background: #182C61;
+	color: #fff;
+	cursor: pointer;
+	outline: none;
+}
+
+.error {
+	font-size: 20px;
+	font-weight: 500;
+	color: red;
+}
+
+.main {
+	padding: 30px 0;
+}
+
+#mainInput {
+	display: none;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+}
+
+.form__label {
+	padding: 10px 20px;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	background: #182C61;
+	color: #fff;
+	cursor: pointer;
+}
+
+.form__label .icon {
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 46px;
+	width: 46px;
+	border-radius: 50%;
+	background: #fff;
+}
+
+.form__label .icon svg path {
+	fill: none;
+	stroke: #182C61;
+}
+
+#customForm form {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 20px 40px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px -3px #eee
+}
+
+#customForm form h1 {
+	margin-bottom: 15px;
+	text-align: center;
+}
