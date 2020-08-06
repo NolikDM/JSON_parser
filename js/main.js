@@ -1,11 +1,11 @@
 start();
 
-/* Делает первый символ строки прописным */
-// function ucFirst(str) {
-// 	if (!str) return str;
+/* Делает первый символ строки заглавным */
+function ucFirst(str) {
+	if (!str) return str;
 
-// 	return str[0].toUpperCase() + str.slice(1);
-// }
+	return str[0].toUpperCase() + str.slice(1);
+}
 
 /* Генерирует целое число в диапозоне от min до max */
 function randomInteger(min, max) {
@@ -26,7 +26,7 @@ function start() {
 }
 
 /* Проверка JSON формата */
-function checkData(str) {
+function checkJSON(str) {
     if(!str) return false;
     if (/^[\],:{}\s]*$/.test(str.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 		return true;
@@ -35,6 +35,7 @@ function checkData(str) {
 	}
 }
 
+/* Создает маску */
 function createMasks() {
 	$('.ANY-ANOTHER').mask('');
 }
@@ -53,7 +54,7 @@ function readFile(input) {
 
     // Запуск рендера страницы
     reader.onload = function() {
-        if(checkData(reader.result)) {
+        if(checkJSON(reader.result)) {
             renderDocument(reader.result);
         } else {
             renderDocument(null, 'Некорректные данные, формат файла должен быть JSON!');
@@ -65,24 +66,8 @@ function readFile(input) {
     }
 }
 
-/* Запускает рендер страницы */
-// function startLoad(reader) {
-//     reader.onload = function() {
-//         if(checkData(reader.result)) {
-//             renderDocument(null, 'Некорректные данные, формат файла должен быть JSON!')
-//         }
-//     }
-
-//     render.onerror = function() {
-//         alert("Ошибка во время загрузки файла");
-//     };
-// }
-
 /* Рендер формы по полученному JSON */
-/* 
-    str - JSON в виде строки 
-    error - ошибка, при наличии
-*/
+/*  str - JSON в виде строки  */
 function renderDocument(str, error = false) {
     let app = document.querySelector('#customForm');
     // парсинг json-объекта в javascript
@@ -92,26 +77,21 @@ function renderDocument(str, error = false) {
         html = '<span class="error">' + error + '</span';
     } else {
         html = '<form method="POST">';
-        html += getFields(data['fields']);
         html += getName(data['name']);
+        html += getFields(data['fields']);
         html += getReferences(data['references']);
         html += getBtns(data['buttons']);
     }
-
     app.innerHTML = html;
     return;
 }
 
 /* Рендер всех полей */
-/* 
-    data - массив данных
-    html - возвращаемая строка
-*/
 function getFields(data) {
     let html = '';
 
     if (!data) {
-        return 'Нет полей!';
+        return '';
     }
 
     for(let i = 0; i < data.length; i++) {
@@ -130,7 +110,7 @@ function getFields(data) {
 function getReferences(data) {
     let html = '';
     if(!data) {
-        return 'Нет ссылок!';
+        return '';
     }
 
     for(let i = 0; i < data.length; i++) {
@@ -150,7 +130,7 @@ function getBtns(data) {
     let html = '';
 
     if (!data) {
-        return 'Нет кнопок!';
+        return '';
     }
 
     for(let i = 0; i < data.length; i++)
@@ -164,10 +144,9 @@ function getBtns(data) {
 /* Рендер имени формы (её может и не быть) */
 function getName(name) {
     if(!name) {
-        return 'Нет имени формы!';
+        return '';
     }
-    // return '<h1>' + ucFirst(name) + '</h1>';
-    return '<h1>' + '</h1>';
+    return '<h1>' + ucFirst(name) + '</h1>';
 }
 
 /* Функция рендерит списки значений для атрибута */
@@ -175,11 +154,11 @@ function getList(arr) {
     let html = '';
     
     if(!arr) {
-        return 'Нет списка значений!';
+        return '';
     }
 
     for(let i = 0; i < arr.length; i++) {
-        if(i == arr.length - 1) {
+        if(i == arr.length - 1) { 
             html += '.' + arr[i];
             break;
         }
@@ -260,7 +239,7 @@ function createTech(attribute, id = '', itClass = '') {
         html += ' list="' + id + '"';
     }
     html += ' /><datalist id="' + id + '">';
-	attibute['technologies'].forEach(function(item) {
+	attribute['technologies'].forEach(function(item) {
 		html += '<option value="' + item + '">'
 	})
 	html += '</datalist>';
@@ -272,7 +251,9 @@ function createTech(attribute, id = '', itClass = '') {
 function renderTag(tag, attribute, id = '', itFor = '', itClass = '') {
     let html = '';
 
-    if (!tag) return 'Нет тегов!';
+    if (!tag) {
+        return '';
+    }
     if (!attribute) return '<' + tag + '>' + '</' + tag + '>';
 
     switch (typeof attribute) {
@@ -326,7 +307,7 @@ function renderTag(tag, attribute, id = '', itFor = '', itClass = '') {
                 break;
             }
 
-            /* Рендер текстовы полей */
+            /* Рендер текстовых полей */
             html = '<' + tag;
             if(id && tag != 'label') {
                 html += ' id="' + id + '"';
@@ -345,4 +326,3 @@ function renderTag(tag, attribute, id = '', itFor = '', itClass = '') {
     }
     return html;
 }
-
