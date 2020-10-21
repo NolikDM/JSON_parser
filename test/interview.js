@@ -6,7 +6,7 @@
             "input":{
                 "type":"text",
                 "required":true,
-                "placeholder":"Иванов Иван Иванович"
+                "placeholder":"Иванов Иван Иванович"еу
             }
         },
         {
